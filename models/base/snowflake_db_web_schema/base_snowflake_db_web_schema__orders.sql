@@ -1,3 +1,4 @@
+-- snowflake_db_web_schema: orders
 select
 _FIVETRAN_ID, 
 ORDER_ID, 

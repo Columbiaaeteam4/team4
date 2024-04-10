@@ -1,3 +1,4 @@
+-- snowflake_db_web_schema: sessions
 select
 _FIVETRAN_ID, 
 CAST(CLIENT_ID AS STRING) AS CLIENT_ID, 

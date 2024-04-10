@@ -1,3 +1,4 @@
+-- snowflake_db_web_schema: page_views
 select
 _FIVETRAN_ID, 
 VIEW_AT AS VIEW_AT_TS, 

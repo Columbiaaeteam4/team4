@@ -1,3 +1,4 @@
+-- snowflake_db_web_schema: item_views
 select
 _FIVETRAN_ID,
 REMOVE_FROM_CART_QUANTITY,
