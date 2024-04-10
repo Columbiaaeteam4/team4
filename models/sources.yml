@@ -6,3 +6,15 @@ sources:
     schema: GOOGLE_DRIVE
     tables:
       - name: expenses
+      - name: hr_joins
+      - name: hr_quits
+      - name: returns
+  
+  - name: snowflake_db_web_schema
+    database: LOAD
+    schema: SNOWFLAKE_DB_WEB_SCHEMA
+    tables:
+      - name: item_views
+      - name: orders
+      - name: page_views
+      - name: sessions
