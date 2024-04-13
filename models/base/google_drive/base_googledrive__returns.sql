@@ -9,6 +9,6 @@ ORDER_ID,
 CASE 
     WHEN IS_REFUNDED = 'yes' THEN TRUE
     WHEN IS_REFUNDED = 'no' THEN FALSE
-    ELSE NULL 
+    ELSE NULL
 END AS IS_REFUNDED
 from {{  source('google_drive', 'returns')}}
