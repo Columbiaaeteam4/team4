@@ -1,0 +1,25 @@
+-- daily_finances (summarizing revenue and costs at the daily level)
+WITH daily_metrics AS (
+    SELECT 
+        DATE(ORDER_AT_TS) AS DATE,
+        SUM((ADD_TO_CART_QUANTITY - REMOVE_FROM_CART_QUANTITY) * PRICE_PER_UNIT) AS REVENUE,
+        SUM(SHIPPING_COST) AS SHIPPING_COST,
+        SUM((ADD_TO_CART_QUANTITY - REMOVE_FROM_CART_QUANTITY) * PRICE_PER_UNIT * TAX_RATE) AS TAX_COST
+    FROM {{ ref('base_snowflake_db_web_schema__orders') }} O
+    LEFT JOIN {{ ref('base_snowflake_db_web_schema__item_views') }} I 
+    ON O.session_id = I.session_id
+    GROUP BY 1
+)
+
+SELECT 
+    COALESCE(E.DATE, D.DATE) AS DATE,
+    COALESCE(SUM(REVENUE), 0) AS REVENUE, 
+    COALESCE(SUM(SHIPPING_COST), 0) AS SHIPPING_COST,
+    COALESCE(SUM(TAX_COST), 0) AS TAX_COST,
+    COALESCE(SUM(EXPENSE_AMOUNT), 0) AS EXPENSE,
+    COALESCE(SUM(SHIPPING_COST), 0) + COALESCE(SUM(TAX_COST), 0) + COALESCE(SUM(EXPENSE_AMOUNT), 0) AS TOTAL_COST,
+    COALESCE(SUM(REVENUE), 0) - (COALESCE(SUM(SHIPPING_COST), 0) + COALESCE(SUM(TAX_COST), 0) + COALESCE(SUM(EXPENSE_AMOUNT), 0)) AS PROFIT
+FROM {{ ref('base_googledrive__expenses') }} E
+LEFT JOIN daily_metrics D 
+ON E.DATE = D.DATE
+GROUP BY 1 
