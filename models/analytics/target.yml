@@ -1,0 +1,84 @@
+version: 2
+
+models:
+  - name: dim_client
+    description: The client dimenion table. This includes all clients that ever placed a request
+    columns:
+      - name: client_id
+        description: The unique id assigned to each client
+        tests:
+          - unique
+          - not_null
+      - name: ip
+        description: The ip address of a client
+      - name: os
+        description: The os of a client
+
+  - name: dim_employee
+    description: The emplyee dimenion table. One row for each emplyee.
+    columns:
+      - name: emplyee_id
+        description: The unique identifier of an emplyee
+        tests:
+          - unique
+          - not_null
+      - name: name 
+        description: The encrypted name of an emplyee
+      - name: title
+        description: The title of an emplyee
+        tests:
+          - not_null
+
+
+  - name: dim_item
+    description: The item dimenion table. One row for each item.
+    columns:
+      - name: item_name
+        description: The unique name of an item
+        tests:
+          - unique
+          - not_null
+
+
+  - name: fact_order
+    description: Fact table for all orders.
+    columns:
+      - name: order_id
+        description: The unique id assigned to each order
+        tests:
+          - unique
+          - not_null
+      - name: session_id
+        description: This is the id of a session
+        tests:
+          - not_null
+      - name: revenue
+        description: This is the revenue of an order
+        tests:
+          - not_null
+
+  - name: fact_session
+    description: Fact table for all sessions.
+    columns:
+      - name: session_id
+        description: This is the id of a session
+        tests:
+          - not_null
+
+  - name: daliy_finance
+    description: Daliy finance table for all dates.
+    columns:
+      - name: date
+        description: This is the date information 
+        tests:
+          - unique
+          - not_null
+      - name: revenue
+        description: This is the revenue of a given day
+        tests:
+          - not_null
+      - name: profit
+        description: This is the profit of a given day
+        tests:
+          - not_null
+        
