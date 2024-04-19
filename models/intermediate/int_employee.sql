@@ -1,3 +1,4 @@
+--dim_employee (one row per employee)
 select 
     J.employee_id,
     NAME,
