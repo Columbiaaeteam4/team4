@@ -15,17 +15,17 @@ models:
         description: The os of a client
 
   - name: dim_employee
-    description: The emplyee dimenion table. One row for each emplyee.
+    description: The employee dimenion table. One row for each employee.
     columns:
-      - name: emplyee_id
-        description: The unique identifier of an emplyee
+      - name: employee_id
+        description: The unique identifier of an employee
         tests:
           - unique
           - not_null
       - name: name 
-        description: The encrypted name of an emplyee
+        description: The encrypted name of an employee
       - name: title
-        description: The title of an emplyee
+        description: The title of an employee
         tests:
           - not_null
 
