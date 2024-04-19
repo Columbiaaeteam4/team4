@@ -2,7 +2,7 @@
 WITH s_ranking AS (
     SELECT *,
            ROW_NUMBER() OVER(PARTITION BY Session_ID ORDER BY SESSION_AT_TS DESC) as session_row_n
-from {{ ref('base_snowflake_db_web_schema__sessions') }}
+    from {{ ref('base_snowflake_db_web_schema__sessions') }}
 ),
 
 pages AS (
@@ -44,7 +44,7 @@ P.PAGE_NAME_ARRAY,
 I.TOTAL_ADD_TO_CART_QUANTITY_PER_SESSION,
 I.TOTAL_REMOVE_FROM_CART_QUANTITY_PER_SESSION,
 I.ITEM_NAME_ARRAY,
-I.TOTAL_VIEW_AMOUNT_PER_SESSION
+I.TOTAL_VIEW_AMOUNT_PER_SESSION,
 from s_ranking S
 left join pages P
 on S.session_id = P.session_id
