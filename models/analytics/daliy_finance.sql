@@ -1,2 +1,2 @@
 select *
-from{{ref('int_daliy_finance')}}
+from {{ref('int_daliy_finance')}}

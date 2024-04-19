@@ -1,2 +1,2 @@
 select * 
-from{{ref('int_fact_order')}}
+from {{ref('int_fact_order')}}
