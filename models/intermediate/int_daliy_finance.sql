@@ -5,7 +5,7 @@ WITH daily_metrics AS (
         SUM(REVENUE) AS REVENUE,
         SUM(SHIPPING_COST) AS SHIPPING_COST,
         SUM(REVENUE * TAX_RATE) AS TAX_COST
-    FROM {{ref('int_order')}}
+    FROM {{ref('int_fact_order')}}
     GROUP BY 1
 ),
 
