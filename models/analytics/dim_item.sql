@@ -1,2 +1,2 @@
 select *
-from{{ref('int_item')}}
+from {{ref('int_item')}}
