@@ -51,6 +51,7 @@ models:
       - name: session_id
         description: This is the id of a session
         tests:
+          - unique
           - not_null
       - name: revenue
         description: This is the revenue of an order
@@ -63,6 +64,7 @@ models:
       - name: session_id
         description: This is the id of a session
         tests:
+          - unique
           - not_null
 
   - name: daliy_finance
