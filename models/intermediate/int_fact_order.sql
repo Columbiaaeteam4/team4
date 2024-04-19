@@ -1,7 +1,7 @@
 -- fact_order (one row per order, summarizing its details)
 WITH o_ranking AS (
     SELECT *,
-           ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY ORDER_AT_TS DESC) as order_row_n
+           ROW_NUMBER() OVER(PARTITION BY session_id ORDER BY ORDER_AT_TS DESC) as order_row_n
     FROM {{ ref('base_snowflake_db_web_schema__orders') }} 
 ),
 
@@ -17,8 +17,9 @@ items AS (
            sum((ADD_TO_CART_QUANTITY - REMOVE_FROM_CART_QUANTITY) * PRICE_PER_UNIT) AS REVENUE
     from {{ ref('base_snowflake_db_web_schema__item_views') }}
     group by session_id
-)
+),
 
+main as(
 SELECT 
 O.order_id,
 O.session_id,
@@ -34,11 +35,19 @@ SHIPPING_COST,
 payment_method,
 phone,
 returned_at,
-is_refunded
+is_refunded,
+case when return_row_n is null then null else True end as is_returned,
+ROW_NUMBER() OVER(PARTITION BY O.order_id ORDER BY O.session_id DESC) as row_n
 FROM o_ranking O
 left join r_ranking R
 on O.order_id = R.order_id
 left join items I
 on O.session_id=I.session_id
-WHERE order_row_n = 1 and return_row_n=1
+WHERE order_row_n = 1 AND (return_row_n = 1 OR return_row_n IS NULL)
+)
+
+select *
+from main
+where 1=1
+and row_n = 1 
 
