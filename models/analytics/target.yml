@@ -48,11 +48,6 @@ models:
         tests:
           - unique
           - not_null
-      - name: session_id
-        description: This is the id of a session
-        tests:
-          - unique
-          - not_null
       - name: revenue
         description: This is the revenue of an order
         tests:
