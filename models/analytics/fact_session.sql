@@ -1,14 +1,2 @@
-select 
-    SESSION_ID,
-    CLIENT_ID,
-    ORDER_ID,
-    SESSION_AT_TS,
-    VIEW_AT_TS,
-    TAX_RATE,
-    ORDER_AT_TS,
-    SHIPPING_COST,
-    ADD_TO_CART_QUANTITY,
-    REMOVE_FROM_CART_QUANTITY,
-    ITEM_VIEW_AT_TS,
-    PRICE_PER_UNIT,
-from {{ ref('int_sessions') }}
+select *
+from {{ ref('int_fact_sessions') }}
