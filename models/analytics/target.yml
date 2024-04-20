@@ -81,7 +81,7 @@ models:
         description: This is the revenue of an order
         tests:
           - not_null
-      - name: item_name_array
+      - name: item_name_array_per_order
         description: The array of items for an order
         tests:
           - not_null
@@ -94,11 +94,15 @@ models:
       - name: shipping_address
         description: The encrypted shipping address of an order
       - name: tax_rate
+        tests:
+          - not_null
         description: The tax rate of an order
       - name: payment_info
         description: The encrypted payment information of an order
       - name: shipping_cost
         description: The shipping cost of an order
+        tests:
+          - not_null
       - name: payment_method
         description: The payment method of an order
       - name: returned_at

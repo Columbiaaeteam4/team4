@@ -2,9 +2,9 @@
 WITH daily_metrics AS (
     SELECT 
         DATE(ORDER_AT_TS) AS DATE,
-        SUM(REVENUE) AS REVENUE,
+        SUM(REVENUE_PER_ORDER) AS REVENUE,
         SUM(SHIPPING_COST) AS SHIPPING_COST,
-        SUM(REVENUE * TAX_RATE) AS TAX_COST
+        SUM(REVENUE_PER_ORDER * TAX_RATE) AS TAX_COST
     FROM {{ref('int_fact_order')}}
     GROUP BY 1
 ),
