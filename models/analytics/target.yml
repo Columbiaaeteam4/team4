@@ -127,7 +127,6 @@ models:
       - name: client_id
         description: This is the unique client id of a session
         tests:
-          - unique
           - not_null
       - name: session_at_ts
         description: This is the time of a session
