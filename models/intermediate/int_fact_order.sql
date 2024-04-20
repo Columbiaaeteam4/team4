@@ -1,5 +1,11 @@
 -- fact_order (one row per order, summarizing its details)
-WITH r_ranking AS (
+WITH o_ranking AS (
+    SELECT *,
+           ROW_NUMBER() OVER(PARTITION BY session_id ORDER BY ORDER_AT_TS DESC) as order_row_n
+    from {{ ref('base_snowflake_db_web_schema__orders') }}
+),
+
+r_ranking AS (
     SELECT *,
            ROW_NUMBER() OVER(PARTITION BY order_id ORDER BY RETURNED_AT DESC) as return_row_n
     from {{ ref('base_googledrive__returns') }} 
@@ -31,13 +37,13 @@ SELECT
     returned_at,
     is_refunded,
     case when return_row_n is null then null else True end as is_returned,
-    ROW_NUMBER() OVER(PARTITION BY O.order_id ORDER BY O.session_id DESC) as order_row_n
-FROM {{ ref('base_snowflake_db_web_schema__orders') }} O
+    ROW_NUMBER() OVER(PARTITION BY O.order_id ORDER BY O.session_id DESC) as row_n
+FROM o_ranking O
 left join r_ranking R
 on O.order_id = R.order_id
 left join items I
 on O.session_id=I.session_id
-WHERE (return_row_n = 1 OR return_row_n IS NULL)
+WHERE order_row_n=1 AND (return_row_n = 1 OR return_row_n IS NULL)
 )
 
 select 
@@ -58,5 +64,5 @@ select
     is_refunded,
     is_returned
 from main
-where order_row_n = 1 
+where row_n = 1 
 
