@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 select 
     J.employee_id,
     NAME,
@@ -13,6 +14,9 @@ left join {{ref('base_googledrive__hr_quits')}} as Q
 on J.EMPLOYEE_ID = Q.EMPLOYEE_ID
 Order by 1
 =======
+=======
+--dim_employee (one row per employee)
+>>>>>>> c90ce17ee580512b69637f14be71013ca7d76b0a
 select 
     J.employee_id,
     NAME,

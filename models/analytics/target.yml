@@ -1,0 +1,180 @@
+version: 2
+
+models:
+  - name: dim_client
+    description: The client dimenion table. This includes all clients that ever placed a session
+    columns:
+      - name: client_id
+        description: The unique id assigned to each client
+        tests:
+          - unique
+          - not_null
+      - name: ip
+        description: The latest ip address of a client
+      - name: os
+        description: The latest os of a client
+
+  - name: dim_employee
+    description: The employee dimenion table. One row for each employee.
+    columns:
+      - name: employee_id
+        description: The unique identifier of an employee
+        tests:
+          - unique
+          - not_null
+      - name: name 
+        description: The encrypted name of an employee
+      - name: title
+        description: The title of an employee
+        tests:
+          - not_null
+      - name: city
+        description: The city of an employee
+      - name: address
+        description: The encrypted address of an employee
+      - name: hire_date
+        description: The hired date of an employee
+        tests:
+          - not_null
+      - name: quit_date
+        description: The quit date of an employee
+      - name: annual_salary
+        description: The annual salary of an employee
+        tests:
+          - not_null
+
+  - name: dim_item
+    description: The item dimenion table. One row for each item.
+    columns:
+      - name: item_name
+        description: The unique name of an item
+        tests:
+          - unique
+          - not_null
+      - name: price_per_unit_array
+        description: The array of prices per unit for each item
+        tests:
+          - not_null
+      - name: total_view_amount_per_item
+        description: The total amount of views for each item
+      - name: total_add_to_cart_quantity_per_item
+        description: The total quantity of an item added to carts
+      - name: total_remove_from_cart_quantity_per_item
+        description: The total quantity of an item removed from carts
+      - name: revenue_per_item
+        description: The revenue of an item        
+
+  - name: fact_order
+    description: Fact table for all orders.
+    columns:
+      - name: order_id
+        description: The unique id assigned to each order
+        tests:
+          - unique
+          - not_null
+      - name: session_id
+        description: The unique session id assigned to each order
+        tests:
+          - not_null
+      - name: revenue_per_order
+        description: This is the revenue of an order
+        tests:
+          - not_null
+      - name: item_name_array_per_order
+        description: The array of items for an order
+        tests:
+          - not_null
+      - name: order_at_ts
+        description: The ordered time of an order
+        tests:
+          - not_null
+      - name: client_name
+        description: The encrypted client name of an order
+      - name: shipping_address
+        description: The encrypted shipping address of an order
+      - name: tax_rate
+        tests:
+          - not_null
+        description: The tax rate of an order
+      - name: payment_info
+        description: The encrypted payment information of an order
+      - name: shipping_cost
+        description: The shipping cost of an order
+        tests:
+          - not_null
+      - name: payment_method
+        description: The payment method of an order
+      - name: returned_at
+        description: The returned date of an order requested for return
+      - name: is_refunded
+        description: Whether the returned order is refunded or not
+      - name: is_returned
+        description: Whether the requested order is returned or not
+      - name: state
+        description: The state of an order
+      - name: phone
+        description: The encrypted phone of client for an order
+
+  - name: fact_session
+    description: Fact table for all sessions.
+    columns:
+      - name: session_id
+        description: This is the unique id of a session
+        tests:
+          - unique
+          - not_null
+      - name: client_id
+        description: This is the unique client id of a session
+        tests:
+          - not_null
+      - name: session_at_ts
+        description: This is the time of a session
+        tests:
+          - not_null
+      - name: order_amount
+        description: The amount of orders for a session
+      - name: page_view_amount
+        description: The amount of page views for a session
+      - name: page_name_array
+        description: The array of pages for a session
+      - name: item_name_array_per_session
+        description: The array of items for a session
+      - name: total_item_view_amount_per_session
+        description: The amount of item views for a session
+      - name: total_add_to_cart_quantity_per_session
+        description: The total quantity of items added to carts for a session
+      - name: total_remove_from_cart_quantity_per_session
+        description: The total quantity of items removed from carts for a session
+
+  - name: daliy_finance
+    description: Daliy finance table for all dates.
+    columns:
+      - name: date
+        description: This is the date information 
+        tests:
+          - unique
+          - not_null
+      - name: revenue
+        description: This is the revenue of a given day
+        tests:
+          - not_null
+      - name: profit
+        description: This is the profit of a given day
+        tests:
+          - not_null
+      - name: total_cost
+        description: This is the total cost of a given day
+        tests:
+          - not_null
+      - name: expense
+        description: This is the expense of a given day
+        tests:
+          - not_null
+      - name: shipping_cost
+        description: This is the shipping cost of a given day
+        tests:
+          - not_null
+      - name: tax_cost
+        description: This is the tax cost of a given day
+        tests:
+          - not_null        
