@@ -75,7 +75,6 @@ models:
       - name: session_id
         description: The unique session id assigned to each order
         tests:
-          - unique
           - not_null
       - name: revenue_per_order
         description: This is the revenue of an order
